@@ -8,13 +8,20 @@ const app = async (yargsObj) => {
         if(yargsObj.add){
             //add movie to mongodb database, needs collection and message
             await addMovie(collection,{title:yargsObj.title, actor: yargsObj.actor});
-        } else {
+         } else if (yargsObj.addMany) {
+         await addMany(collection, yargsObj);
+         } else if (yargsObj.find) {
+         await find(collection, yargsObj);
+         } else if (yargsObj.update) {
+         await update(collection, yargsObj);
+         } else if (yargsObj.remove) {
+         await remove(collection, yargsObj);    
+         } else {
             console.log("Incorrect command")
-        }
-        client.close()
     } catch (error) {
-        console.log(error);
+     console.log(error);
     }
+  client.close();
 }
 
 app(yargs.argv)
